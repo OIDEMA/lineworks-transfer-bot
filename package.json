@@ -1,0 +1,14 @@
+{
+  "name": "anabukicontactbot",
+  "version": "1.0.0",
+  "description": "ユーザーが質問事項を伝えると特定の部屋に通知がいく",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Taku",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
