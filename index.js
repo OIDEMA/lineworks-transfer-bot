@@ -7,6 +7,7 @@ const request = require("request");
 const qs = require("querystring");
 const express = require("express");
 const server = express();
+const SendToDepartment = require("./send-to-department");
 
 const APIID = process.env.APIID;
 const SERVERID = process.env.SERVERID;
@@ -16,9 +17,10 @@ const BOTNO = process.env.BOTNO;
 
 server.listen(process.env.PORT || 3000);
 
+// RoomIdの確認も入れるしかないのか
 server.post("/callback", (req, res) => {
   res.sendStatus(200);
-  const message = req.body.content.text;
+  const messageText = req.body.content.text;
   const roomId = req.body.source.roomId;
   const accountId = req.body.source.accountId;
   getJWT(jwttoken => {
