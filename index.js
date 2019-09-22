@@ -1,5 +1,6 @@
 "use strict";
 
+require("dotenv").config();
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const https = require("https");
@@ -8,6 +9,7 @@ const qs = require("querystring");
 const express = require("express");
 const server = express();
 const SendToDepartment = require("./send-to-department");
+const CheckRoomId = require("./check-roomId");
 
 const APIID = process.env.APIID;
 const SERVERID = process.env.SERVERID;
@@ -15,6 +17,7 @@ const CONSUMERKEY = process.env.CONSUMERKEY;
 const PRIVATEKEY = process.env.PRIVATEKEY;
 const BOTNO = process.env.BOTNO;
 
+server.use(bodyParser.json());
 server.listen(process.env.PORT || 3000);
 
 // RoomIdの確認も入れるしかないのか
@@ -22,10 +25,15 @@ server.post("/callback", (req, res) => {
   res.sendStatus(200);
   const messageText = req.body.content.text;
   const roomId = req.body.source.roomId;
+  console.log(JSON.stringify(req.body));
   const accountId = req.body.source.accountId;
   getJWT(jwttoken => {
     getServerToken(jwttoken, newtoken => {
-      fetchTelNumber(qnaInput, newtoken, accountId);
+      if (messageText === "roomid") {
+        CheckRoomId(newtoken, roomId, accountId);
+      } else {
+        SendToDepartment(qnaInput, newtoken, accountId);
+      }
     });
   });
 });
