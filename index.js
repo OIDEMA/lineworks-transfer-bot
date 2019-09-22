@@ -14,7 +14,7 @@ const APIID = process.env.APIID;
 const SERVERID = process.env.SERVERID;
 const PRIVATEKEY = process.env.PRIVATEKEY;
 
-const RegEmail = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
+const RegEmail = /^(([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+)\n+.*$/;
 
 server.use(bodyParser.json());
 server.listen(process.env.PORT || 3000);
@@ -24,7 +24,7 @@ server.post("/callback", (req, res) => {
   res.sendStatus(200);
   const messageText = req.body.content.text;
   const roomId = req.body.source.roomId;
-  console.log(JSON.stringify(req.body));
+  console.log(RegEmail.test(messageText));
   const accountId = req.body.source.accountId;
   getJWT(jwttoken => {
     getServerToken(jwttoken, newtoken => {
@@ -33,7 +33,7 @@ server.post("/callback", (req, res) => {
       } else if (RegEmail.test(messageText)) {
         const matchAccountId = messageText.match(RegEmail);
         const replaceAnswerMessage = messageText.replace(matchAccountId, "");
-        SendToQuestioner(newtoken, matchAccountId, replaceAnswerMessage);
+        SendToQuestioner(newtoken, matchAccountId[1], replaceAnswerMessage); // 配列のところはもう少し考えなくてはいけないな
       } else {
         SendToDepartment(messageText, newtoken, accountId);
       }

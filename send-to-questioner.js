@@ -3,6 +3,7 @@ module.exports = function SendToQuestioner(token, accountId, answerMessage) {
   const APIID = process.env.APIID;
   const CONSUMERKEY = process.env.CONSUMERKEY;
   const BOTNO = process.env.BOTNO;
+  console.log(accountId);
   const postDataQuestion = {
     url: "https://apis.worksmobile.com/" + APIID + "/message/sendMessage/v2",
     headers: {
@@ -15,7 +16,7 @@ module.exports = function SendToQuestioner(token, accountId, answerMessage) {
       accountId: accountId,
       content: {
         type: "text",
-        text: answerMessage
+        text: "Answer Comment"
       }
     }
   };
