@@ -1,16 +1,27 @@
-module.exports = function sendToDepartment() {
+module.exports = function sendToDepartment(messageText, token, accountId) {
   const request = require("request");
-  const ROOTURL = process.env.ROOT_URL_LINEWORKS;
-  const PATHCOMMON_MESSAGE = process.env.PATHCOMMON_MESSAGE;
   const BOTNO = process.env.BOTNO;
-  const HEADERS = {
-    "Content-Type": "application/json; charset=UTF-8"
-  };
+  const API_ID = process.env.APIID;
+  const CONSUMERKEY = process.env.CONSUMERKEY;
   const postData = {
-    roomId: "", //
-    content: {
-      type: "text",
-      text: "" // 質問内容と質問者を記載する
+    url: "https://apis.worksmobile.com/" + API_ID + "/message/sendMessage/v2",
+    headers: {
+      consumerKey: CONSUMERKEY,
+      Authorization: "Bearer " + token
+    },
+    json: {
+      botNo: Number(BOTNO),
+      roomId: "22433334",
+      content: {
+        type: "text",
+        text: "「" + messageText + "」\n" + accountId + "\n からの質問です。" // 質問内容と質問者を記載する
+      }
     }
   };
+  request.post(postData, (err, response, body) => {
+    if (err) {
+      console.log("error send message: ", err);
+      return;
+    }
+  });
 };

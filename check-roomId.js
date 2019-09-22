@@ -21,7 +21,6 @@ module.exports = function CheckRoomId(token, roomId, accountId) {
       }
     }
   };
-  console.log(postDataForRoomId);
   request.post(postDataForRoomId, (err, res, body) => {
     if (err) {
       console.log("Error checkRoomId: ", err);

@@ -32,7 +32,7 @@ server.post("/callback", (req, res) => {
       if (messageText === "roomid") {
         CheckRoomId(newtoken, roomId, accountId);
       } else {
-        SendToDepartment(qnaInput, newtoken, accountId);
+        SendToDepartment(messageText, newtoken, accountId);
       }
     });
   });
