@@ -1,9 +1,9 @@
-module.exports = function CheckRoomId(token, roomId, accountId) {
+module.exports = function SendToQuestioner(token, accountId, answerMessage) {
   const request = require("request");
-  const BOTNO = process.env.BOTNO;
-  const CONSUMERKEY = process.env.CONSUMERKEY;
   const APIID = process.env.APIID;
-  const postDataForRoomId = {
+  const CONSUMERKEY = process.env.CONSUMERKEY;
+  const BOTNO = process.env.BOTNO;
+  const postDataQuestion = {
     url: "https://apis.worksmobile.com/" + APIID + "/message/sendMessage/v2",
     headers: {
       "Content-Type": "application/json;charset=UTF-8",
@@ -15,15 +15,15 @@ module.exports = function CheckRoomId(token, roomId, accountId) {
       accountId: accountId,
       content: {
         type: "text",
-        text: String(roomId)
+        text: answerMessage
       }
     }
   };
-  request.post(postDataForRoomId, (err, res, body) => {
+  request.post(postDataQuestion, (err, res, body) => {
     if (err) {
-      console.log("Error checkRoomId: ", err);
+      console.log("Error AnswerMessage: ", err);
       return;
     }
-    console.log("postDataForRoomId: ", body);
+    console.log("answerMessage: ", body);
   });
 };

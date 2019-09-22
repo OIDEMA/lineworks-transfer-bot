@@ -3,19 +3,18 @@
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
-const https = require("https");
 const request = require("request");
-const qs = require("querystring");
 const express = require("express");
 const server = express();
 const SendToDepartment = require("./send-to-department");
 const CheckRoomId = require("./check-roomId");
+const SendToQuestioner = require("./send-to-questioner");
 
 const APIID = process.env.APIID;
 const SERVERID = process.env.SERVERID;
-const CONSUMERKEY = process.env.CONSUMERKEY;
 const PRIVATEKEY = process.env.PRIVATEKEY;
-const BOTNO = process.env.BOTNO;
+
+const RegEmail = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
 
 server.use(bodyParser.json());
 server.listen(process.env.PORT || 3000);
@@ -31,6 +30,10 @@ server.post("/callback", (req, res) => {
     getServerToken(jwttoken, newtoken => {
       if (messageText === "roomid") {
         CheckRoomId(newtoken, roomId, accountId);
+      } else if (RegEmail.test(messageText)) {
+        const matchAccountId = messageText.match(RegEmail);
+        const replaceAnswerMessage = messageText.replace(matchAccountId, "");
+        SendToQuestioner(newtoken, matchAccountId, replaceAnswerMessage);
       } else {
         SendToDepartment(messageText, newtoken, accountId);
       }
