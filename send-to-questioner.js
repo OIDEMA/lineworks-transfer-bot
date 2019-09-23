@@ -16,7 +16,7 @@ module.exports = function SendToQuestioner(token, accountId, answerMessage) {
       accountId: accountId,
       content: {
         type: "text",
-        text: "Answer Comment"
+        text: answerMessage
       }
     }
   };
