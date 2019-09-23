@@ -40,7 +40,6 @@ server.post("/callback", (req, res) => {
         const replaceAnswerMessage = messageText.replace(RegEmail, "");
         // const matchAccountId = messageText.match(RegEmail);
         // const replaceAnswerMessage = messageText.replace(matchAccountId, "");
-        console.log(replaceAnswerMessage);
         SendToQuestioner(newtoken, matchAccountId[1], replaceAnswerMessage); // 配列のところはもう少し考えなくてはいけないな
       } else {
         SendToDepartment(messageText, newtoken, accountId);
