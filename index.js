@@ -31,15 +31,10 @@ server.post("/callback", (req, res) => {
       if (messageText === "roomid") {
         CheckRoomId(newtoken, roomId, accountId);
       } else if (RegEmail.test(messageText)) {
-        // const matchAccountId = messageText.match(
-        //   /([A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,})\n/
-        // );
         const matchAccountId = messageText.match(
           /([A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,})\n/
         );
         const replaceAnswerMessage = messageText.replace(RegEmail, "");
-        // const matchAccountId = messageText.match(RegEmail);
-        // const replaceAnswerMessage = messageText.replace(matchAccountId, "");
         SendToQuestioner(newtoken, matchAccountId[1], replaceAnswerMessage); // 配列のところはもう少し考えなくてはいけないな
       } else {
         SendToDepartment(messageText, newtoken, accountId);
