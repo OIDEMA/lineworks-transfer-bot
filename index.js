@@ -26,6 +26,7 @@ server.post("/callback", (req, res) => {
   const messageText = req.body.content.text;
   const roomId = req.body.source.roomId;
   const accountId = req.body.source.accountId;
+  console.log(messageText);
   getJWT(jwttoken => {
     getServerToken(jwttoken, newtoken => {
       if (messageText === "roomid") {
