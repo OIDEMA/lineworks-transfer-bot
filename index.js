@@ -26,7 +26,7 @@ server.post("/callback", (req, res) => {
   const messageText = req.body.content.text;
   const roomId = req.body.source.roomId;
   const accountId = req.body.source.accountId;
-  console.log(messageText);
+  console.log(roomId);
   getJWT(jwttoken => {
     getServerToken(jwttoken, newtoken => {
       if (messageText === "roomid") {
@@ -37,7 +37,7 @@ server.post("/callback", (req, res) => {
         );
         const replaceAnswerMessage = messageText.replace(RegEmail, "");
         SendToQuestioner(newtoken, matchAccountId[1], replaceAnswerMessage); // 配列のところはもう少し考えなくてはいけないな
-      } else {
+      } else if (roomId !== "23935639") {
         SendToDepartment(messageText, newtoken, accountId);
       }
     });
