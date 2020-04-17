@@ -42,8 +42,6 @@ server.post("/callback", (req, res) => {
   } else if (contentType === "sticker") {
     const stickerId = req.body.content.stickerId;
     const packagedId = req.body.content.packageId;
-    console.log(stickerId)
-    console.log(packagedId)
     getJWT(jwttoken => {
       getServerToken(jwttoken, newtoken => {
         SendStickerToDepartment(newtoken, stickerId, packagedId);
