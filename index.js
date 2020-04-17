@@ -2,8 +2,6 @@
 
 require("dotenv").config();
 const bodyParser = require("body-parser");
-// const jwt = require("jsonwebtoken");
-// const request = require("request");
 const express = require("express");
 const server = express();
 const SendToDepartment = require("./send-to-department");
@@ -13,18 +11,12 @@ const SendImageToDepartment = require("./send-image-to-department");
 
 const getJWT = require("./getJWT")
 const getServerToken = require("./get-server-token")
-
-// const APIID = process.env.APIID;
-// const SERVERID = process.env.SERVERID;
-// const PRIVATEKEY = process.env.PRIVATEKEY;
-
-// const RegEmail = /^([A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,})\n/;
 const RegEmail = /^([A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,})\n/;
 
 server.use(bodyParser.json());
 server.listen(process.env.PORT || 3000);
 
-// RoomIdの確認も入れるしかないのか
+
 server.post("/callback", (req, res) => {
   res.sendStatus(200);
 
@@ -50,6 +42,8 @@ server.post("/callback", (req, res) => {
   } else if (contentType === "sticker") {
     const stickerId = req.body.content.stickerId;
     const packagedId = req.body.content.packageId;
+    console.log(stickerId)
+    console.log(packagedId)
     getJWT(jwttoken => {
       getServerToken(jwttoken, newtoken => {
         SendStickerToDepartment(newtoken, stickerId, packagedId);
@@ -65,49 +59,3 @@ server.post("/callback", (req, res) => {
   }
 });
 
-  
-// JWTの更新と取得
-// function getJWT(callback) {
-//  const iss = SERVERID;
-//  const iat = Math.floor(Date.now() / 1000);
-//  const exp = iat + 60 * 60; //JWTの有効期間は1時間
-//  const cert = Buffer.from(PRIVATEKEY.replace(/\\n/g, "\n"));
-//  jwt.sign(
-//    { iss: iss, iat: iat, exp: exp },
-//    cert,
-//    { algorithm: "RS256" },
-//    (err, jwttoken) => {
-//      if (!err) {
-//        callback(jwttoken);
-//      } else {
-//        console.log("getJWT Error: ", err);
-//      }
-//    }
-//  );
-//},
-
-// Server Tokenの取得
-//function getServerToken(jwttoken, callback) {
-//  const postdata = {
-//    url: "https://authapi.worksmobile.com/b/" + APIID + "/server/token",
-//    headers: {
-//      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-//    },
-//    form: {
-//      grant_type: encodeURIComponent(
-//        "urn:ietf:params:oauth:grant-type:jwt-bearer"
-//      ),
-//      assertion: jwttoken
-//    }
-//  };
-//  request.post(postdata, (error, response, body) => {
-//    if (error) {
-//      console.log("Error getServerToken: ", error);
-//      callback(error);
-//    } else {
-//      const jsonobj = JSON.parse(body);
-//      const AccessToken = jsonobj.access_token;
-//      callback(AccessToken);
-//    }
-//  });
-// });

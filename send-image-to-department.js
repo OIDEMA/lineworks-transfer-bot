@@ -3,6 +3,7 @@ module.exports = function sendIamgeToDepartment(token, resourceId) {
     const BOTNO = process.env.BOTNO;
     const API_ID = process.env.APIID;
     const CONSUMERKEY = process.env.CONSUMERKEY;
+
     const postData = {
       url: "https://apis.worksmobile.com/" + API_ID + "/message/sendMessage/v2",
       headers: {
