@@ -14,7 +14,7 @@ module.exports = function sendToDepartment(messageText, token, accountId) {
       roomId: process.env.LINE_IT_TALKROOMID,
       content: {
         type: "text",
-        text: "「" + messageText + "」\n" + accountId + "\n からの質問です。" // 質問内容と質問者を記載する
+        text: "「" + messageText + "」\n" + accountId // 質問内容と質問者を記載する
       }
     }
   };
