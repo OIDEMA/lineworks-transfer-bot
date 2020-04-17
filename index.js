@@ -42,16 +42,21 @@ server.post("/callback", (req, res) => {
   } else if (contentType === "sticker") {
     const stickerId = req.body.content.stickerId;
     const packagedId = req.body.content.packageId;
+
     getJWT(jwttoken => {
       getServerToken(jwttoken, newtoken => {
-        SendStickerToDepartment(newtoken, stickerId, packagedId);
+        if (roomId !== process.env.LINE_IT_TALKROOMID) {
+          SendStickerToDepartment(newtoken, stickerId, packagedId);
+        }
       });
     });
   } else if (contentType === "image") {
     const resourceId = req.body.content.resourceId;
     getJWT(jwttoken => {
       getServerToken(jwttoken, newtoken => {
-        SendImageToDepartment(newtoken, resourceId);
+        if (roomId !== process.env.LINE_IT_TALKROOMID) {
+          SendImageToDepartment(newtoken, resourceId);
+        }
       });
     });
   }
