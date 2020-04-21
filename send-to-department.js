@@ -22,9 +22,6 @@ module.exports = function sendToDepartment(messageText, token, accountId) {
     if (err) {
       console.log("error send message: ", err);
       return;
-    } else if (messageText === "利用開始") {
-      console.log('利用開始メッセージは送りません。');
-      process.exit(0);
     }
   });
 };
