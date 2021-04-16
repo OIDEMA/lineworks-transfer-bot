@@ -3,6 +3,7 @@ module.exports = function sendMessage(token, accountId, message) {
     const BOTNO = process.env.BOTNO;
     const CONSUMERKEY = process.env.CONSUMERKEY;
     const API_ID = process.env.APIID;
+    
     const postData = {
         url = "https://apis.worksmobile.com/" + API_ID + "/message/sendMessage/v2",
         headers: {

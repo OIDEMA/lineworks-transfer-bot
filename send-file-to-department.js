@@ -1,4 +1,4 @@
-module.exports = function sendStickerToDepartment(token, stickerId, packageId) {
+module.exports = function sendIamgeToDepartment(token, resourceId) {
   const request = require("request");
   const BOTNO = process.env.BOTNO;
   const API_ID = process.env.APIID;
@@ -15,19 +15,15 @@ module.exports = function sendStickerToDepartment(token, stickerId, packageId) {
       botNo: Number(BOTNO),
       roomId: ROOMID,
       content: {
-        type: "sticker",
-        packageId: packageId,
-        stickerId: stickerId
+        type: "file",
+        resourceId: resourceId
       }
     }
   };
   request.post(postData, (err, response, body) => {
-    if (body) {
-      console.log("your request body: ", body);
+    if (err) {
+      console.log("error send message: ", err);
       return;
-    } else if (err) {
-        console.log("error messgage ", body);
-        return;
-      }
+    }
   });
 };

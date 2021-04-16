@@ -1,10 +1,11 @@
 module.exports = function sendToDepartment(messageText, token, accountId) {
   const request = require("request");
   const BOTNO = process.env.BOTNO;
-  const API_ID = process.env.APIID;
+  const APIID = process.env.APIID;
   const CONSUMERKEY = process.env.CONSUMERKEY;
+
   const postData = {
-    url: "https://apis.worksmobile.com/" + API_ID + "/message/sendMessage/v2",
+    url: "https://apis.worksmobile.com/" + APIID + "/message/sendMessage/v2",
     headers: {
       consumerKey: CONSUMERKEY,
       Authorization: "Bearer " + token
@@ -22,6 +23,9 @@ module.exports = function sendToDepartment(messageText, token, accountId) {
     if (err) {
       console.log("error send message: ", err);
       return;
+    } else if (messageText === "利用開始") {
+      console.log('利用開始メッセージは送りません。')
+      process.exit(0);
     }
   });
 };
