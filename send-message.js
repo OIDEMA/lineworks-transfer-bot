@@ -26,4 +26,3 @@ module.exports = function sendMessage(token, accountId, message) {
         }
     })
   };
-  

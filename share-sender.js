@@ -20,11 +20,7 @@ module.exports = function shareSender(token, accountId, contentType) {
         }
     };
     request.post(postData, (err, response, body) => {
-        if (err) {
         console.log("error send message: ", err);
         return;
-        } else if (messageText === "利用開始") {
-        console.log('利用開始メッセージは送りません。')
-        }
     });
 };

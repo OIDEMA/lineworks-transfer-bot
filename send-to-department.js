@@ -1,5 +1,8 @@
+// module読み込み
+const request = require('request');
+const axios = require('axios');
+
 module.exports = function sendToDepartment(messageText, token, accountId) {
-  const request = require("request");
   const BOTNO = process.env.BOTNO;
   const APIID = process.env.APIID;
   const CONSUMERKEY = process.env.CONSUMERKEY;
@@ -23,9 +26,31 @@ module.exports = function sendToDepartment(messageText, token, accountId) {
     if (err) {
       console.log("error send message: ", err);
       return;
-    } else if (messageText === "利用開始") {
-      console.log('利用開始メッセージは送りません。')
-      process.exit(0);
     }
+  });
+
+  const body = {
+    "app": 5,
+    "record": {
+        "questioner": {
+            "value": accountId
+        },
+        "description": {
+            "value": messageText
+        }
+    }
+  }
+  axios({
+    method: 'post',
+    url: 'https://ckhspb2zfv9t.cybozu.com/k/v1/record.json',
+    data: body,
+    headers: {
+      "X-Cybozu-API-Token": process.env.accessToken,
+      "Content-Type": 'application/json'
+    },
+  }).then((res) => {
+    console.log(res.data)
+  }).catch((error) => {
+    console.log(error);
   });
 };
