@@ -1,5 +1,8 @@
-module.exports = function shareSender(token, accountId, contentType) {
-    const request = require("request");
+// module読み込み
+const request = require('request');
+const axios = require('axios');
+
+module.exports = async function shareSender(token, accountId, contentType) {
     const BOTNO = process.env.BOTNO;
     const APIID = process.env.APIID;
     const CONSUMERKEY = process.env.CONSUMERKEY;
@@ -36,7 +39,7 @@ module.exports = function shareSender(token, accountId, contentType) {
           }).then((res) => {
             return res.data
           })
-          return "ID：" + accountId  + "\n" + `${account.name}さんが${contentType}を送信しました。` +  account.name + "\n" +　"所属部署：" + account.representOrgUnitName
+          return "ID：" + accountId  + "\n" + `${account.name}さんが${contentType}を送信しました。` + "\n" +　"所属部署：" + account.representOrgUnitName
         } catch (e) {
           console.log(e)
         }
