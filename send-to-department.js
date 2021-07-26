@@ -47,28 +47,4 @@ module.exports = async function sendToDepartment(messageText, token, accountId) 
       console.log(e)
     }
   }
-  const body = {
-    "app": 5,
-    "record": {
-        "questioner": {
-            "value": accountId
-        },
-        "description": {
-            "value": messageText
-        }
-    }
-  }
-  axios({
-    method: 'post',
-    url: 'https://ckhspb2zfv9t.cybozu.com/k/v1/record.json',
-    data: body,
-    headers: {
-      "X-Cybozu-API-Token": process.env.accessToken,
-      "Content-Type": 'application/json'
-    },
-  }).then((res) => {
-    console.log(res.data)
-  }).catch((error) => {
-    console.log(error);
-  });
 };
