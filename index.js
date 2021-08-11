@@ -12,6 +12,8 @@ const SendToQuestioner = require("./send-to-questioner");
 const SendImageToDepartment = require("./send-image-to-department");
 const SendStickerToDepartment = require("./send-sticker-to-department");
 const goHome = require("./go-home-message");
+const startWork = require("./start-work-message");
+
 // who send files
 const shareSender = require("./share-sender");
 const getJWT = require("./getJWT");
@@ -85,10 +87,22 @@ server.post("/callback", (req, res) => {
 });
 
 // 定時に特定のメッセージを送付する
-cron.schedule('0 55 17 * * 1-5', () => {
+cron.schedule('0 0 18 * * 1-5', () => {
   getJWT(jwttoken => {　
       getServerToken(jwttoken, newtoken => {
         goHome(newtoken);
+      })
+  })
+}, {
+  scheduled: true,
+  timeZone: 'Asia/Tokyo',
+});
+
+// 定時に特定のメッセージを送付する
+cron.schedule('0 0 9 * * 1-5', () => {
+  getJWT(jwttoken => {　
+      getServerToken(jwttoken, newtoken => {
+        startWork(newtoken);
       })
   })
 }, {
