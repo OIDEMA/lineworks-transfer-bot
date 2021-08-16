@@ -16,7 +16,7 @@ module.exports = function sendToDepartment(token) {
         roomId: process.env.LINE_IT_TALKROOMID,
         content: {
           type: "text",
-          text: "終業時刻です。退勤ボタンを忘れないように気をつけましょう。"
+          text: "まもなく始業時刻です。出勤ボタンを忘れないように気をつけましょう。"
         }
       }
     };
